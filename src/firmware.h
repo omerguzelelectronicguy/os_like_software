@@ -34,5 +34,7 @@ void firmware_init(void);
 void switch_to_supervisor(void);
 void machine_trap_handler(void);
 void setup_timer_interrupt(unsigned long interval);
+void reset_mtimecmp(unsigned long val);
+void reset_mtime(unsigned long val);
 
 #endif /* FIRMWARE_H */

@@ -6,6 +6,9 @@
 _start:
     # Setup stack pointer
     la sp, _stack_start
+#    li ra, 0x02004000      # those are for spike
+#    li t0, -1              # to prevent timer interrupt
+#    sw t0, 0(ra)           # from spike clint.
     
 #    # Clear BSS section
 #    la t0, _bss_start

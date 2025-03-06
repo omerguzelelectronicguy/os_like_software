@@ -38,10 +38,10 @@ $(TARGET).dump: $(TARGET).elf
 	$(AS) $(ASFLAGS) -c $< -o $@
 
 drun: all
-	/opt/riscv/bin/spike -l --log-commits firmware.elf
+	/opt/riscv/bin/spike -d -l --log-commits -m0x80000000:0x100000,0x70080000:0x100000 firmware.elf
 
 run: all
-	/opt/riscv/bin/spike firmware.elf
+	/opt/riscv/bin/spike -m0x80000000:0x100000,0x70080000:0x100000 firmware.elf
 
 clean:
 	rm -f $(OBJS) $(TARGET).elf $(TARGET).bin $(TARGET).dump

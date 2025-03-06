@@ -4,6 +4,19 @@
 .global machine_trap_handler_asm
 .align 2
 machine_trap_handler_asm:
+    jal     x0, machine_exception_handler
+    jal     x0, machine_exception_handler # supervisor_handler_software_int
+    .word   0x0
+    jal     x0, machine_exception_handler # machine_handler_software_int
+    .word   0x0
+    jal     x0, machine_exception_handler # supervisor_handler_timer_int
+    .word   0x0
+    jal     x0, machine_exception_handler # machine_handler_timer_int
+    .word   0x0
+    jal     x0, machine_exception_handler # supervisor_handler_external_int
+    .word   0x0
+    jal     x0, machine_exception_handler # machine_handler_external_int
+machine_exception_handler:
     # Save registers
     addi sp, sp, -16*4
     sw ra, 0*4(sp)
