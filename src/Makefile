@@ -8,9 +8,9 @@ OBJCOPY = /opt/riscv/bin/riscv64-unknown-elf-objcopy
 OBJDUMP = /opt/riscv/bin/riscv64-unknown-elf-objdump
 
 # Flags
-CFLAGS = -march=rv64gc -mabi=lp64 -mcmodel=medany -O2 -g -Wall -nostdlib -ffreestanding
+CFLAGS = -march=rv64gc -mabi=lp64 -mcmodel=medany -O2 -g -Wall -nostdlib -ffreestanding -nostartfiles
 ASFLAGS = -march=rv64gc -mabi=lp64 -g
-LDFLAGS = -T link.ld -nostdlib --nostartfiles
+LDFLAGS = -nostdlib -T link.ld
 
 # Source files
 C_SRCS = main.c firmware.c supervisor.c user_apps.c
@@ -37,7 +37,10 @@ $(TARGET).dump: $(TARGET).elf
 %.o: %.S
 	$(AS) $(ASFLAGS) -c $< -o $@
 
+run: all
+	/opt/riscv/bin/spike -d -l --log-commits firmware.elf
+
 clean:
 	rm -f $(OBJS) $(TARGET).elf $(TARGET).bin $(TARGET).dump
 
-.PHONY: all clean
+.PHONY: all run clean
