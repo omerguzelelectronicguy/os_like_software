@@ -26,8 +26,8 @@
 #define MSTATUS_MPIE        0x0080  // Machine Previous Interrupt Enable
 
 // PLIC and timer registers
-#define MTIME_ADDR      0x200BFF8
-#define MTIMECMP_ADDR   0x2004000
+#define MTIME_ADDR      0x70087FF8
+#define MTIMECMP_ADDR   0x70080000
 
 // Function prototypes
 void firmware_init(void);

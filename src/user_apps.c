@@ -20,7 +20,7 @@ void user_app1(void) {
     
     while (1) {
         // Simulated work
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             counter++;
         }
         
