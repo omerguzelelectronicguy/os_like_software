@@ -5,7 +5,6 @@
 void syscall(int call_number, void* arg) {
     register int a0 asm("a0") = call_number;
     register void* a1 asm("a1") = arg;
-    
     asm volatile(
         "ecall"
         : "+r"(a0)
@@ -32,6 +31,8 @@ void user_app1(void) {
 // User application 2 - Fibonacci calculator
 void user_app2(void) {
     int a = 0, b = 1, c;
+    int n = 128;
+    while(n--);
     
     while (1) {
         // Calculate next Fibonacci number

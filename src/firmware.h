@@ -24,6 +24,7 @@
 #define MSTATUS_MPP_S       0x0800  // Supervisor mode
 #define MSTATUS_MPP_U       0x0000  // User mode
 #define MSTATUS_MPIE        0x0080  // Machine Previous Interrupt Enable
+#define MSTATUS_MIE         0x0008  // Machine Interrupt Enable
 
 // PLIC and timer registers
 #define MTIME_ADDR      0x70087FF8

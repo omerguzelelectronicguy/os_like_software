@@ -6,7 +6,8 @@
 int main(void) {
     // Initialize the firmware in machine mode
     firmware_init();
-    
+    int n=500;
+    while (n--);
     // Switch to supervisor mode
     switch_to_supervisor();
     

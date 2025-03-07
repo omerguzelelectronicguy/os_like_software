@@ -31,7 +31,7 @@ void firmware_init(void) {
     
     // Setup the timer for a future interrupt
     reset_mtimecmp(256);
-    setup_timer_interrupt(256);
+    setup_timer_interrupt(128);
 }
 
 // Set up the timer for a future interrupt
@@ -47,6 +47,11 @@ void setup_timer_interrupt(unsigned long interval) {
     asm volatile("csrr %0, mie" : "=r"(mie));
     mie |= (1 << 7); // MTIE: Machine Timer Interrupt Enable
     asm volatile("csrw mie, %0" : : "r"(mie));
+    
+    unsigned long mstatus;
+    asm volatile("csrr %0, %1" : "=r"(mstatus) : "i"(CSR_MSTATUS));
+    mstatus |= MSTATUS_MIE;          // Enable interrupts 
+    asm volatile("csrw %0, %1" : : "i"(CSR_MSTATUS), "r"(mstatus));
 }
 void reset_mtimecmp(unsigned long val) {
     volatile unsigned long* mtimecmp = (volatile unsigned long*)MTIMECMP_ADDR;
@@ -65,7 +70,7 @@ void machine_trap_handler(void) {
     asm volatile("csrr %0, %1" : "=r"(mcause) : "i"(CSR_MCAUSE));
     
     // Check if it's a timer interrupt (bit 31 set and code 7)
-    if ((mcause & 0x8000000000000000) && ((mcause & 0x7FFFFFFF) == 7)) {
+    if (mcause == 0x8000000000000007) {
         // Timer interrupt: reschedule timer and continue
         setup_timer_interrupt(512);  // Reset timer for next interrupt
         
